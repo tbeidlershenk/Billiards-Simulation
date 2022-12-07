@@ -1,9 +1,11 @@
 ### Billiards-Simulation
-Python simulation of a pool game, created using the PyGame library. Handles ball-ball and ball-rail collisions and friction, and pocket collisions to remove balls from the table.
+- Python simulation of a pool game, created using the PyGame library. 
+- Handles ball-ball and ball-rail collisions and friction.
+- Pocket collisions remove balls from the table.
 
 ### Controls:
-Hit spacebar to fire cue ball toward mouse position, at a velocity proportional to your mouse's distance from the cue ball.
-Hit r key to reset the simulation.
+- Hit spacebar to fire cue ball toward mouse position, at a velocity proportional to your mouse's distance from the cue ball.
+- Hit r key to reset the simulation.
 
 ### Running
-In a terminal: ```python3 PygameTest.py```
+- In a terminal: ```python3 PygameTest.py```
