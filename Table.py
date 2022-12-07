@@ -36,11 +36,7 @@ class Table(object):
                 
                 x = self.triangle_loc[0] + (i * spc)
                 y = self.triangle_loc[1] + (i * spc) - (2 * j * spc)
-                color = 'Red'
-                if (len(table) == 5):
-                    color = 'Black'
-                elif (len(table) % 2 == 0):
-                    color = 'Blue'
+                color = 'Blue'
                 b = Ball(self, x, y, 0, 0, color)
                 table.append(b)
                 
@@ -100,7 +96,6 @@ class Table(object):
         for ball in self.table_balls:
             for pocket in self.pockets:
                 if pocket.has_ball_collided(ball):
-                    print('collision')
                     self.table_balls.remove(ball)
                     self.pocket_balls.append(ball)
 

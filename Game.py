@@ -2,7 +2,6 @@ import pygame
 import math
 import Config as cg
 from Table import Table
-from Player import Player
 
 class Game(object):
 
@@ -10,13 +9,6 @@ class Game(object):
         self.font = pygame.font.SysFont(cg.FONT, 30)
         self.screen = pygame.display.set_mode((cg.WIDTH, cg.HEIGHT))
         self.table_surface = Table()
-        self.table_status = {
-            'Red': 7, 
-            'Black': 1, 
-            'Blue': 7
-        }
-        
-        self.computer = Player(True)
         self.draw_game_components()
         self.game_paused = False
 
@@ -38,11 +30,7 @@ class Game(object):
                     if event.key == pygame.K_r:
                         self.table_surface.table_balls = self.table_surface.setup_triangle() 
                 if event.type == pygame.MOUSEMOTION:
-                    print(pygame.mouse.get_pos())     
                     pass
-    
-    def train_network():
-        pass
 
     def draw_game_components(self):
         self.table_surface.draw(self.screen)

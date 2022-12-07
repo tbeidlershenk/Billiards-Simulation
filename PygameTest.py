@@ -7,7 +7,7 @@ pygame.init()
 
 pygame.display.set_caption(cg.FRAME_NAME)
 game = Game()
-
+print("Controls: space to shoot toward mouse, r to reset.")
 clock = pygame.time.Clock()
 time = 0
 

@@ -39,7 +39,6 @@ class Ball(object):
         new_vy = self.vel[1] + self.accel[1] * delta
         self.vel = (new_vx, new_vy)
         self.stop_oscillation()
-        print(": " + str(self.vel[0]) + ", " + str(self.vel[1]))
 
     def update_acceleration(self, delta):
         force_friction = self.mass * cg.G * cg.FRICTION
@@ -133,4 +132,4 @@ class Ball(object):
         angle = math.atan((cue_pos[1] - mouse_pos[1])/(cue_pos[0] - mouse_pos[0]))
         if (mouse_pos[0] < cue_pos[0]):
             angle += math.pi
-        self.vel = ((dist/20) * math.cos(angle), (dist/20) * math.sin(angle))
+        self.vel = ((dist/30) * math.cos(angle), (dist/30) * math.sin(angle))
