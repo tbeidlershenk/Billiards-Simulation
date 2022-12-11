@@ -12,37 +12,40 @@ class Ball(object):
         self.color = color
         self.mass = 10.0
         self.update_angle()
-        self.update_acceleration(cg.DELTA)
+        self.update_acceleration()
         self.collision_occurred = False
-        self.collision_log = []
-        
+  
     def draw(self, screen):
         rad = int(self.radius)
         pygame.draw.circle(screen, self.color, (self.pos[0], self.pos[1]), rad)
 
-    def physics_process(self, side_width, delta):
+    def physics_process(self, delta, time):
         if (self.angle != None):
-            self.update_position(delta)
-            self.update_velocity(side_width, delta)
-            self.update_acceleration(delta)
-    
-    def update_position(self, delta):
-        
+            # Update velocity
+            self.update_velocity(delta)
+            print(self.collision_occurred, self.pos)
+            # Update acceleration if there has been a collision
+            if (self.collision_occurred or time % 100 == 0):
+                self.update_acceleration()
+                self.collision_occurred = False
+            # Update position
+            self.update_position()
+
+    def update_position(self):
         new_x = self.pos[0] + self.vel[0]
         new_y = self.pos[1] + self.vel[1]
         self.pos = (new_x, new_y)
 
-    def update_velocity(self, side_width, delta):
-        
-        self.table.check_bumper_collision(self, side_width)
+    def update_velocity(self, delta):
         new_vx = self.vel[0] + self.accel[0] * delta
         new_vy = self.vel[1] + self.accel[1] * delta
         self.vel = (new_vx, new_vy)
+        self.update_angle()
         self.stop_oscillation()
 
-    def update_acceleration(self, delta):
+
+    def update_acceleration(self):
         force_friction = self.mass * cg.G * cg.FRICTION
-        self.update_angle()
         accel = force_friction / self.mass
         self.accel = (accel * math.cos(self.angle), accel * math.sin(self.angle))
 
@@ -59,11 +62,14 @@ class Ball(object):
             self.angle += math.pi
 
     def stop_oscillation(self):
-        low_vel = 0.1
+        low_vel = 0.2
         if (self.vel[0] < low_vel and self.vel[0] > -1 * low_vel):
             self.vel = (0, self.vel[1])
+            self.accel = (0, self.accel[1])
         if (self.vel[1] < low_vel and self.vel[1] > -1 * low_vel):
             self.vel = (self.vel[0], 0)
+            self.accel = (self.accel[0], 0)
+
    
     def check_ball_collision(self, b2):
         circle_dist = math.sqrt((self.pos[0] - b2.pos[0]) ** 2 + (self.pos[1] - b2.pos[1]) ** 2)
@@ -77,9 +83,7 @@ class Ball(object):
             collision_point = (cx, cy)
             # move balls back
             self.handle_ball_collision(b2, collision_point, sum_radii, circle_dist)
-            self.collision_log.append(b2)
-        else:
-            self.collision_log.append(None)
+            self.collision_occurred = True
 
     def move_balls_back(self, b2, collision_point, sum_radii, circle_dist):
         
@@ -125,6 +129,9 @@ class Ball(object):
 
         self.vel = (cg.CONST_RESTITUTION_BALL * new_vel_x1, cg.CONST_RESTITUTION_BALL * new_vel_y1)
         b2.vel = (cg.CONST_RESTITUTION_BALL * new_vel_x2, cg.CONST_RESTITUTION_BALL * new_vel_y2)
+
+        self.update_acceleration()
+
 
     def cue_hit(self, mouse_pos):
         cue_pos = (self.pos[0] + self.radius, self.pos[1] + self.radius)    

@@ -18,9 +18,7 @@ while True:
     # game.train_network()
 
     if not game.game_paused:
-        game.draw_game_components()
-
-    game.update_game_state()
+        game.draw_game_components(time)
 
     pygame.display.update() 
     time = time + 1

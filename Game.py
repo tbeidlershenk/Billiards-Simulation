@@ -9,7 +9,7 @@ class Game(object):
         self.font = pygame.font.SysFont(cg.FONT, 30)
         self.screen = pygame.display.set_mode((cg.WIDTH, cg.HEIGHT))
         self.table_surface = Table()
-        self.draw_game_components()
+        self.draw_game_components(0)
         self.game_paused = False
 
     def handle_events(self, events):
@@ -30,13 +30,9 @@ class Game(object):
                     if event.key == pygame.K_r:
                         self.table_surface.table_balls = self.table_surface.setup_triangle() 
                 if event.type == pygame.MOUSEMOTION:
-                    pass
+                    print("drawing line")
 
-    def draw_game_components(self):
+    def draw_game_components(self, time):
         self.table_surface.draw(self.screen)
-        self.table_surface.move_balls(self.screen, True)
-
-    def update_game_state(self): 
-        #self.side_surface.draw(self.screen, self.game_paused)
-        pass
+        self.table_surface.move_balls(self.screen, True, time)
         
