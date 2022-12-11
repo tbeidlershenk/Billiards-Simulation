@@ -8,4 +8,4 @@
 - Hit r key to reset the simulation.
 
 ### Running
-- In a terminal: ```python3 PygameTest.py```
+- In a terminal: ```python3 SimTest.py```
